@@ -13,7 +13,7 @@ services:
     hostname: 'sqlserverservice'  
     environment:  
       ACCEPT_EULA: 'Y' 
-      SA_PASSWORD: "Vignesh@95!"  
+      SA_PASSWORD: "Vignesh@95"  
     volumes:  
       - ./productapi:/var/opt/mssql/data  
     ports:  
