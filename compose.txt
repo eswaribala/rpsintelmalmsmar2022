@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  productservice:
+    image: ${DOCKER_REGISTRY-}productservice
+    build:
+      context: .
+      dockerfile: ProductService/Dockerfile
+    depends_on:
+      - sqlserverservice  
+  sqlserverservice:  
+    image: mcr.microsoft.com/mssql/server 
+    hostname: 'sqlserverservice'  
+    environment:  
+      ACCEPT_EULA: 'Y' 
+      SA_PASSWORD: "Vignesh@95!"  
+    volumes:  
+      - ./productapi:/var/opt/mssql/data  
+    ports:  
+      - '1433:1433'  
+    expose:  
+      - 1433  
