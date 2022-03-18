@@ -28,4 +28,26 @@ public class ProductControllerTest
             var items = Assert.IsType<List<Product>>(okResult);
            Assert.Equal(3, items.Count);
         }
+
+        [Fact]
+        public void GetById_UnknownProductIdPassed_ReturnsNotFoundResult()
+        {
+            // Act
+            var notFoundResult = this._ProductController.Get(4);
+
+            // Assert
+            Assert.Null(notFoundResult);
+        }
+
+        [Fact]
+        public void GetById_ExistingProductIdPassed_ReturnsOkResult()
+        {
+           
+
+            // Act
+            var okResult = this._ProductController.Get(2);
+
+            // Assert
+            Assert.IsType<Product>(okResult);
+        }
     }
