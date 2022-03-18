@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+  productservice:
+    image: eswaribala/productmar2022repo:productapp
+    build:
+      context: .
+      dockerfile: ProductService/Dockerfile
+    ports:
+      - 8084:80
+      - 8086:443
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://*:80
+    
+    depends_on:
+      - sqlserverservice  
+  sqlserverservice:  
+    image: mcr.microsoft.com/mssql/server 
+    hostname: 'sqlserverservice'  
+    environment:  
+      ACCEPT_EULA: 'Y' 
+      SA_PASSWORD: "Vignesh@95!"
+      MSSQL_PID: 'Express'
+    volumes:  
+      - ./productapi:/var/opt/mssql/data123 
+    ports:  
+      - '1406:1433'  
+    expose:  
+      - 1406
+    
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+   
+
+  grafana: 
+    image: grafana/grafana
+    #command:
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=P@ssw0rd
+    restart: always
+    ports:
+      - 3000:3000
+   
