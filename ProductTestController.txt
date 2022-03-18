@@ -1,0 +1,31 @@
+public class ProductControllerTest
+    {
+        private readonly ProductController _ProductController;
+        private readonly IProductRepository _ProductRepository;
+        public ProductControllerTest()
+        {
+           this._ProductRepository = new ProductFakeRepository();
+           this._ProductController = new ProductController(_ProductRepository);
+        }
+
+        [Fact]
+        public void Get_WhenCalled_ReturnsOkResult()
+        {
+            // Act
+            var okResult = this._ProductController.Get();
+
+            // Assert
+            Assert.IsType<List<Product>>(okResult);
+        }
+
+        [Fact]
+        public void Get_WhenCalled_ReturnsAllItems()
+        {
+            // Act
+            var okResult = this._ProductController.Get(); 
+
+            // Assert
+            var items = Assert.IsType<List<Product>>(okResult);
+           Assert.Equal(3, items.Count);
+        }
+    }
